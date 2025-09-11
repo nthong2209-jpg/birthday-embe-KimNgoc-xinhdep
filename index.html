@@ -13,28 +13,77 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   overflow-y: auto;
+  position: relative;
 }
 
-h1 { font-size: 3rem; color: #0369a1; text-shadow: 2px 2px 6px rgba(0,0,0,0.2); margin-top: 40px; animation: bounce 1.5s infinite; }
-@keyframes bounce {0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
+h1 {
+  font-family: "Fredoka One", cursive;
+  font-size: 3rem;
+  color: #0369a1;
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+  margin-top: 40px;
+  animation: bounce 1.5s infinite;
+}
+@keyframes bounce { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-10px); } }
 
-.message, .surprise p, .surprise img { max-width: 650px; margin: 20px auto; border-radius: 16px; box-shadow: 0 4px 12px rgba(56,189,248,0.3); transition: opacity 1s ease, transform 1s ease;}
-.message { padding: 15px 20px; font-size: 1.1rem; line-height: 1.6; background: rgba(186,230,253,0.1); border: 2px solid #38bdf8; min-height: 120px; white-space: pre-wrap; overflow-wrap: break-word; opacity:0;}
-.message.show { opacity:1; }
+.message, #dogMessage {
+  max-width: 650px;
+  margin: 20px auto;
+  padding: 15px 20px;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  background: rgba(186,230,253,0.1);
+  border: 2px solid #38bdf8;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(56,189,248,0.3);
+  min-height: 100px;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  opacity:0;
+  transition: opacity 1s ease, transform 1s ease;
+}
+.message.show, #dogMessage.show { 
+  opacity:1; 
+  animation: heartbeat 1.5s infinite; 
+}
+@keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
 
-.fade-out { opacity:0; transform:translateY(-30px) scale(0.9); pointer-events:none; }
-.fade-in { opacity:1; transform:translateY(0) scale(1); pointer-events:auto; }
-
-.surprise { display:flex; flex-direction:column; align-items:center; opacity:0; transform:translateY(20px) scale(0.9); position: relative;}
+.surprise {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  opacity:0;
+  transform:translateY(20px) scale(0.9);
+  position: relative;
+}
 .surprise.show { opacity:1; transform:translateY(0) scale(1);}
-.surprise img { max-width:320px; margin-top:15px; opacity:0; transform:scale(1.05); transition: opacity 1s ease, transform 1s ease;}
-.surprise.show img { opacity:1; transform:scale(1); }
+
+/* ======= Surprise Box giống messageBox ======= */
+#surpriseBox p, #surpriseBox img {
+  padding: 15px 20px;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  background: rgba(186,230,253,0.1);
+  border: 2px solid #38bdf8;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(56,189,248,0.3);
+  max-width: 650px;
+  margin: 15px auto;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  opacity: 0; /* ban đầu ẩn */
+  transition: opacity 1s ease, transform 1s ease;
+}
+#surpriseBox.show p, #surpriseBox.show img {
+  opacity: 1;
+  animation: heartbeat 1.5s infinite;
+}
 
 #countdownBar {
   position:absolute;
   bottom:-12px;
   left:0;
-  height:14px; /* bự hơn */
+  height:14px;
   background: skyblue;
   width:100%;
   border-radius:7px;
@@ -42,54 +91,146 @@ h1 { font-size: 3rem; color: #0369a1; text-shadow: 2px 2px 6px rgba(0,0,0,0.2); 
   transition: width 0.5s ease-out;
 }
 
-button { margin-top: 20px; padding: 12px 20px; border:none; border-radius:20px; background:#0ea5e9; color:white; font-size:1rem; cursor:pointer; transition:0.3s, box-shadow 0.3s;}
+button {
+  margin-top: 20px;
+  padding: 12px 20px;
+  border:none;
+  border-radius:20px;
+  background:#0ea5e9;
+  color:white;
+  font-size:1rem;
+  cursor:pointer;
+  transition:0.3s, box-shadow 0.3s;
+  position: relative;
+  z-index: 6;
+}
 button:hover { background:#0284c7; box-shadow:0 0 12px rgba(0,150,255,0.6); }
 
-.heart { position: fixed; bottom: -30px; font-size: 28px; color: #38bdf8; animation: rise 8s linear forwards; z-index:5;}
+.heart {
+  position: fixed;
+  bottom: -30px;
+  font-size: 28px;
+  color: #38bdf8;
+  animation: rise 8s linear forwards;
+  z-index:5;
+}
 @keyframes rise { to { transform:translateY(-120vh); opacity:0; } }
 
-canvas { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; }
+canvas { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:4; }
 
-#musicControl { position: fixed; bottom:20px; right:20px; background:#0ea5e9; border:none; color:white; padding:10px 14px; border-radius:50%; cursor:pointer; font-size:1.2rem; box-shadow:0 4px 10px rgba(0,0,0,0.2);}
-#musicControl:hover { background:#0284c7;}
+#musicControl {
+  position: fixed;
+  bottom:20px;
+  right:20px;
+  background:#0ea5e9;
+  border:none;
+  color:white;
+  padding:10px 14px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:1.2rem;
+  box-shadow:0 4px 10px rgba(0,0,0,0.2);
+  z-index:7;
+}
+#musicControl:hover { background:#0284c7; }
+
+#giftBox {
+  display:none;
+  width:120px;
+  height:120px;
+  margin:30px auto 10px;
+  background:url('https://cdn-icons-png.flaticon.com/512/616/616408.png') no-repeat center/contain;
+  cursor:pointer;
+  z-index:7;
+  position:relative;
+}
+@keyframes jump { 0% { transform: translateY(0) rotate(0); } 30% { transform: translateY(-40px) rotate(-10deg); } 50% { transform: translateY(0) rotate(10deg); } 70% { transform: translateY(-20px) rotate(-5deg); } 100% { transform: translateY(0) rotate(0); } }
+.jump { animation: jump 0.8s ease; }
+
+#slideshow { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); justify-content:center; align-items:center; z-index:9; flex-direction: column; }
+#slideshow img { max-width:80%; max-height:70%; border-radius:20px; box-shadow:0 0 20px rgba(255,255,255,0.6); }
+#closeSlideshow { margin-top: 20px; padding: 10px 20px; background: #f43f5e; border: none; border-radius: 12px; color: white; cursor: pointer; font-size: 1rem; }
+#closeSlideshow:hover { background: #be123c; }
+
+#finalOverlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); color:white; font-size:2rem; justify-content:center; align-items:center; z-index:10; text-align:center; }
+
+#surpriseCountdown { font-weight:bold; margin-left:8px; color:#fef08a; display:inline-block; animation:pulse 1s infinite; }
+@keyframes pulse { 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.3); } }
+
+.confetti{border-radius:50%; pointer-events:none;}
 </style>
 </head>
 <body>
 
 <h1>☁️ Happy Birthday to em bé Kim Ngọc 💙</h1>
 
-<button id="showMessageBtn">Bấm vô em nèee 🐕</button>
+<div class="controls">
+  <button id="showMessageBtn">Bấm vô em nèee chị Ngọc uii 🐕</button>
+</div>
 <div class="message" id="messageBox"></div>
 
-<button id="surpriseBtn">🐕🐩 Tụi em có bất ngờ dành cho chị Ngọc nèe, chị Ngọc kiên nhẫn xem hết nheee 🦮🐕‍🦺</button>
+<div class="controls" style="margin-top:14px;">
+  <button id="surpriseBtn">🐕🐩 Tụi em có bất ngờ cho chị Ngọc nè, chị Ngọc kiên nhẫn xem hết nhee 🦮 🐕‍🦺 <span id="surpriseCountdown"></span></button>
+</div>
+
 <div id="surpriseBox" class="surprise">
   <div id="countdownBar"></div>
+</div>
+
+<div id="giftBox"></div>
+<div id="dogMessage"></div>
+
+<div id="slideshow">
+  <img id="slideImg" src="" alt="Slideshow">
+  <button id="closeSlideshow">❌ Đóng</button>
+</div>
+
+<div id="finalOverlay">
+  Anh yêu em nhiều lắm 💙 Chúc mừng sinh nhật tình yêu của anh 💕
 </div>
 
 <audio id="bgMusic" loop>
   <source src="https://raw.githubusercontent.com/nthong2209-jpg/birthday-web-Kngoc/main/happy-birthday-to-you-piano-version-13976.mp3" type="audio/mpeg">
 </audio>
+<audio id="dogBark">
+  <source src="https://www.soundjay.com/animal/dog-barking-1.mp3" type="audio/mpeg">
+</audio>
 
 <canvas id="fireworks"></canvas>
 
 <script>
-// Lời chúc
-const messageText = `Hôm nay là một ngày tuyệt đẹp, ngày mà có một cô công chúa được giáng trần, hôm nay là ngày của em, Kim Ngọc. 
-Dù chúng ta đã không còn đi chung một con đường, không còn đồng hành cùng với nhau, nhưng trong lòng anh, anh vẫn luôn mong em thật vững vàng và trưởng thành hơn trên chặng đường phía trước.
-Anh mong rằng em sẽ luôn tìm thấy niềm vui, hạnh phúc và sự bình yên trong cuộc sống của riêng em.
-Anh mong rằng mọi ước mơ, mọi hoài bão của em đều sẽ thành hiện thực, và trên mỗi chặng đường sắp tới, anh mong và hi vọng mình sẽ được là người luôn đồng hành cùng với em, che chở cho em, bù đắp cho em và yêu thương em hết lòng. 💕
-Cảm ơn em vì những kỷ niệm đẹp mà cả hai chúng ta đã tạo ra cùng nhau, và chúc em mãi mãi là phiên bản tuyệt vời nhất của chính mình. 💙.`;
+// ======= Lời chúc =======
+const messageText = `Gửi em, hôm nay là ngày của em, Kim Ngọc, vào ngày sinh nhật tuổi mới
+Không biết em có còn nhớ hay còn muốn mở bức thư này ra đọc hay không. Nhưng nếu em đang đọc đến đây, thì anh cảm ơn em - cảm ơn em vì đã cho anh được hiện diện trong ngày đặc biệt nhất của em dù bằng cách này hay cách khác
 
-// Surprise boxes
+Anh chúc em sinh nhật vui vẻ. Chúc em tuổi mới thật bình an, xinh đẹp và luôn luôn giỏi giang tốt bụng. Anh chúc em đủ mạnh mẽ để giữ lấy những điều xứng đáng, đủ tinh tường để nhận ra những điều không tốt đang đến với mình và đủ dịu dàng để luôn yêu thương chính em.🎀💙
+Anh không rõ sinh nhật năm nay của em sẽ diễn ra như thế nào, sẽ có bao nhiêu người bên cạnh em, sẽ có bao nhiêu điều mà em luôn mong đợi xảy ra. Nhưng nếu có 1 niềm tin, 1 điều anh tin: thì đó là em xứng đáng được yêu thương một cách đầy đủ và an yên. Điều gì đã mỏi hãy cứ can đảm buông, còn điều gì còn thương, hãy cứ giữ lấy bằng tất cả sự can đảm của mình, em nhé
+Anh không muốn nói nhiều, chỉ muốn cảm ơn em, cảm ơn em vì đã từng ở lại vào những năm tháng không hề dễ dàng. Cảm ơn em đã từng kiên nhẫn, đã từng dịu dàng, đã từng bao dung và đã từng yêu thương bằng chính cả bản thân em, anh thật sự cảm ơn em, rất nhiều.💞
+
+Cảm ơn em, vì đã từng là nhà, vì đã từng là nơi để anh về tìm kiếm sự dịu dàng và yêu thương từ em, anh thương em 💙
+`;
+
+// ======= Surprise boxes =======
 const surprises = [
-  { text: "Ngày nì là ngày có một cô công chúa cực kì giỏi giang và xinh đẹp chào đời 🎁💙", img: "https://raw.githubusercontent.com/nthong2209-jpg/birthday-web-Kngoc/main/anh_hoi_nho_cua_Kngoc.jpg" },
-  { text: "Chúc em luôn mỉm cười và hạnh phúc mỗi ngày 🌸", img: "https://raw.githubusercontent.com/nthong2209-jpg/birthday-web-Kngoc/main/anh_birthday_2.jpg" },
-  { text: "Mọi điều tốt đẹp sẽ đến với em 💙", img: "https://raw.githubusercontent.com/nthong2209-jpg/birthday-web-Kngoc/main/birthday3.jpg" }
+  { text: "Ngày nì là ngày có một cô công chúa cực kì giỏi giang và xinh đẹp chào đời trong vòng tay ấm áp của ba mẹ và mọi người thương yêu 🎁💙", img: "https://raw.githubusercontent.com/nthong2209-jpg/birthday-web-Kngoc/main/anh_hoi_nho_cua_Kngoc.jpg" },
+  { text: "Và rồi, cô gái ấy cũng lớn lên và ăn học thành tài, trở thành một người tốt bụng và giỏi giang luôn giúp đỡ mọi người. Cô gái ấy nhiều năm liền đạt được HSG trong trường và đặc biệt còn đạt được giải HSG môn Sử cấp thành phố nữa 🌸", img: "https://raw.githubusercontent.com/nthong2209-jpg/birthday-embe-KimNgoc-xinhdep/main/anh_Kngoc_hoidihoc.jpg" },
+  { text: "Cô gái ấy không những là một người xinh đẹp, giỏi giang, mà còn là một người con gái vô cùng dễ thương và hiền dịu, cô ấy là một cô gái có tính cách dễ thương và rất biết cách làm nũng trước mặt mọi người, thật sự ai nhìn thấy đều không thể rời mắt được 💕 ", img: "https://raw.githubusercontent.com/nthong2209-jpg/birthday-embe-KimNgoc-xinhdep/main/anh_dthh_cua_Kngoc.png" },
+  { text: "Cô ấy là người con gái đầy năng lượng tích cực, luôn tỏa sáng và truyền cảm hứng cho mọi người xung quanh. Dịu dàng và tử tế trong từng hành động, và tinh tế đến từng chi tiết nhỏ, khiến ai tiếp xúc cũng cảm thấy ấm áp và an yên. Mỗi nụ cười của cô ấy đều mang lại niềm vui và sự tươi mới, một sự kết hợp hoàn hảo giữa lòng tốt, sự nhạy bén và vẻ đẹp tự nhiên. 🌷🎇 ", img: "https://raw.githubusercontent.com/nthong2209-jpg/birthday-embe-KimNgoc-xinhdep/main/anh_Kngoc_xinhdep.jpg"},
+  { text: "Và mình cũng chúc cô gái này có mãi nụ cười trên môi, mãi mãi giữ năng lượng tích cực này và mãi mãi có một cuộc sống an yên và hạnh phúc, Kim Ngọc, em thật sự là một cô gái mà mọi người hằng mong ước, mãi mãi giữ nụ cười này nhé, mãi mãi giữ sự an yên và hạnh phúc của chính em nhé. Thương em 💙", img: "https://raw.githubusercontent.com/nthong2209-jpg/birthday-embe-KimNgoc-xinhdep/main/anh_birthday_2.jpg"},
 ];
 let currentIndex = 0;
 
-// Typing effect
-function typeMessage(text, element, speed=30){
+// ======= Slideshow =======
+const slideshowImages = [
+  "https://raw.githubusercontent.com/nthong2209-jpg/birthday-web-Kngoc/main/slideshow1.jpg",
+  "https://raw.githubusercontent.com/nthong2209-jpg/birthday-web-Kngoc/main/slideshow2.jpg",
+  "https://raw.githubusercontent.com/nthong2209-jpg/birthday-web-Kngoc/main/slideshow3.jpg"
+];
+let slideIndex = 0;
+let slideInterval;
+
+// ======= Typing effect =======
+function typeMessage(text, element, speed=40){
   let i=0;
   element.textContent="";
   element.classList.add("show");
@@ -100,25 +241,30 @@ function typeMessage(text, element, speed=30){
   }, speed);
 }
 
-// Hiện message và nhạc
+// ======= Hiện messageBox =======
 document.getElementById("showMessageBtn").addEventListener("click", ()=>{
-  typeMessage(messageText, document.getElementById("messageBox"), 30);
+  typeMessage(messageText, document.getElementById("messageBox"), 40);
   document.getElementById("showMessageBtn").disabled=true;
   document.getElementById("bgMusic").play().catch(()=>{});
 });
 
-// Surprise button và countdown
-document.getElementById("surpriseBtn").addEventListener("click", ()=>{
-  nextSurprise();
-});
-
-// Hàm chuyển surprise box với countdown
+// ======= Surprise button + countdown =======
+document.getElementById("surpriseBtn").addEventListener("click", ()=>{ nextSurprise(); });
 function nextSurprise(){
   const box = document.getElementById("surpriseBox");
-  const bar = document.getElementById("countdownBar");
-  if(currentIndex >= surprises.length){ alert("Đã hết bất ngờ 🎉"); return;}
+  const countdownSpan = document.getElementById("surpriseCountdown");
+  const gift = document.getElementById("giftBox");
+  const dogMessage = document.getElementById("dogMessage");
 
-  // Xóa nội dung cũ
+  if(currentIndex >= surprises.length){
+    gift.style.display = "block";
+    dogMessage.classList.add("show");
+    typeMessage("Gâu gâu 🐶! Đây là hộp quà đặc biệt anh dành tặng cho em, em click vào em chó ở trên để mở ra nhee, đây sẽ chất chứa rất rất rất nhiều kỉ niệm đó 💙", dogMessage,40);
+    countdownSpan.textContent="";
+    spawnConfetti();
+    return;
+  }
+
   box.classList.remove("show");
   box.innerHTML = '<div id="countdownBar"></div>';
   const barNew = document.getElementById("countdownBar");
@@ -130,22 +276,24 @@ function nextSurprise(){
   box.appendChild(p); box.appendChild(img);
 
   void box.offsetWidth;
-  setTimeout(()=>{ box.classList.add("show"); }, 200);
+  setTimeout(()=>{ box.classList.add("show"); }, 500);
 
-  // Countdown 30s
   let countdown = 30;
+  countdownSpan.textContent = countdown+"s";
   const interval = setInterval(()=>{
     countdown--;
+    countdownSpan.textContent = countdown+"s";
     barNew.style.width = `${(countdown/30)*100}%`;
     if(countdown<=0){
       clearInterval(interval);
       currentIndex++;
+      spawnConfetti();
       nextSurprise();
     }
   },1000);
 }
 
-// Nhạc nền
+// ======= Nhạc nền =======
 const music = document.getElementById("bgMusic");
 const musicBtn = document.createElement("button");
 musicBtn.id="musicControl"; musicBtn.textContent="▶️"; document.body.appendChild(musicBtn);
@@ -156,21 +304,109 @@ musicBtn.addEventListener("click", ()=>{
   isPlaying=!isPlaying;
 });
 
-// Trái tim
+// ======= Trái tim =======
 setInterval(()=>{
-  const h=document.createElement("div"); h.className="heart"; h.innerText="💙";
-  h.style.left=Math.random()*window.innerWidth+"px"; h.style.fontSize=(20+Math.random()*20)+"px";
-  document.body.appendChild(h); setTimeout(()=>h.remove(),8000);
+  const heart=document.createElement("div");
+  heart.className="heart";
+  const colors=["#f43f5e","#facc15","#38bdf8","#10b981","#8b5cf6","#f472b6"];
+  heart.style.color=colors[Math.floor(Math.random()*colors.length)];
+  heart.innerText="💙";
+  heart.style.left=Math.random()*window.innerWidth+"px";
+  heart.style.fontSize=(20+Math.random()*20)+"px";
+  heart.style.transform=`rotate(${Math.random()*360}deg)`;
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),8000);
 },1200);
 
-// Pháo hoa
+// ======= Fireworks =======
 const canvas=document.getElementById("fireworks");
-const ctx=canvas.getContext("2d"); canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth; canvas.height=window.innerHeight;
 let particles=[];
-function createFirework(x,y){for(let i=0;i<50;i++){particles.push({x,y,angle:Math.random()*Math.PI*2,speed:Math.random()*5+2,alpha:1});}}
-function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach((p,i)=>{p.x+=Math.cos(p.angle)*p.speed;p.y+=Math.sin(p.angle)*p.speed;p.alpha-=0.01;ctx.fillStyle=`rgba(90,160,255,${p.alpha})`;ctx.beginPath();ctx.arc(p.x,p.y,3,0,Math.PI*2);ctx.fill();if(p.alpha<=0)particles.splice(i,1);});requestAnimationFrame(animate);}
+function createFirework(x,y){
+  for(let i=0;i<50;i++){ particles.push({x,y,angle:Math.random()*Math.PI*2,speed:Math.random()*5+2,alpha:1}); }
+}
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach((p,i)=>{
+    p.x+=Math.cos(p.angle)*p.speed;
+    p.y+=Math.sin(p.angle)*p.speed;
+    p.alpha-=0.01;
+    ctx.fillStyle=`rgba(90,160,255,${p.alpha})`;
+    ctx.beginPath(); ctx.arc(p.x,p.y,3,0,Math.PI*2); ctx.fill();
+    if(p.alpha<=0)particles.splice(i,1);
+  });
+  requestAnimationFrame(animate);
+}
 animate();
 setInterval(()=>createFirework(Math.random()*canvas.width,Math.random()*canvas.height*0.5),700);
+
+// ======= Confetti =======
+function spawnConfetti(){
+  const confettiCount=50;
+  for(let i=0;i<confettiCount;i++){
+    const conf=document.createElement("div");
+    conf.className="confetti";
+    conf.style.position="fixed";
+    conf.style.top="0px";
+    conf.style.left=Math.random()*window.innerWidth+"px";
+    conf.style.width="10px";
+    conf.style.height="10px";
+    conf.style.backgroundColor=["#f43f5e","#facc15","#38bdf8","#10b981","#8b5cf6","#f472b6"][Math.floor(Math.random()*6)];
+    conf.style.opacity=Math.random();
+    conf.style.transform=`rotate(${Math.random()*360}deg)`;
+    conf.style.zIndex=8;
+    document.body.appendChild(conf);
+    let pos=0;
+    const fall=setInterval(()=>{
+      pos+=3+Math.random()*3;
+      conf.style.top=pos+"px";
+      if(pos>window.innerHeight){ clearInterval(fall); conf.remove(); }
+    },16);
+  }
+}
+
+// ======= Con chó + slideshow =======
+const gift=document.getElementById("giftBox");
+const dogAudio=document.getElementById("dogBark");
+const slideshow=document.getElementById("slideshow");
+const slideImg=document.getElementById("slideImg");
+const finalOverlay=document.getElementById("finalOverlay");
+const closeBtn=document.getElementById("closeSlideshow");
+
+function animateSurpriseImage(img){
+  img.style.transition="transform 0.5s";
+  img.style.transform="scale(1.2) rotate(10deg)";
+  setTimeout(()=>{ img.style.transform="scale(1) rotate(0deg)"; },500);
+}
+
+gift.addEventListener("click", ()=>{
+  gift.classList.add("jump");
+  setTimeout(()=>gift.classList.remove("jump"),800);
+  dogAudio.currentTime=0; dogAudio.play();
+
+  spawnConfetti();
+
+  slideshow.style.display="flex";
+  slideIndex=0;
+  slideImg.src=slideshowImages[slideIndex];
+  animateSurpriseImage(slideImg);
+  slideInterval=setInterval(()=>{
+    slideIndex=(slideIndex+1)%slideshowImages.length;
+    slideImg.src=slideshowImages[slideIndex];
+    animateSurpriseImage(slideImg);
+  },4000);
+
+  setTimeout(()=>{ endSlideshow(); },slideshowImages.length*4000);
+});
+
+closeBtn.addEventListener("click", ()=>{ endSlideshow(); });
+function endSlideshow(){
+  clearInterval(slideInterval);
+  slideshow.style.display="none";
+  finalOverlay.style.display="flex";
+  spawnConfetti();
+}
 </script>
 </body>
 </html>
