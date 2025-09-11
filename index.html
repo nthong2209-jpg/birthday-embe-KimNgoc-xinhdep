@@ -58,7 +58,7 @@ h1 {
 }
 .surprise.show { opacity:1; transform:translateY(0) scale(1);}
 
-/* ======= Surprise Box giống messageBox ======= */
+/* ======= Surprise Box giống messageBox, bỏ nhấp nháy ======= */
 #surpriseBox p, #surpriseBox img {
   padding: 15px 20px;
   font-size: 1.1rem;
@@ -76,7 +76,8 @@ h1 {
 }
 #surpriseBox.show p, #surpriseBox.show img {
   opacity: 1;
-  animation: heartbeat 1.5s infinite;
+  animation: none; /* bỏ heartbeat */
+  transform: none; /* giữ nguyên tỉ lệ, không scale */
 }
 
 #countdownBar {
