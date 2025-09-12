@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>Happy Birthday Kim Ngọc 💙</title>
 <style>
-/* ===== BODY GỐC ===== */
+/* ===== BODY ===== */
 body {
   font-family: "Segoe UI", sans-serif;
   background: linear-gradient(to bottom, #bae6fd, #e0f2fe, #ffffff);
@@ -15,6 +15,9 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
   position: relative;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
 /* ===== LOCK SCREEN ===== */
@@ -34,18 +37,27 @@ body {
   border-radius: 20px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.3);
   text-align: center;
-  max-width: 300px;
+  max-width: 350px;
   width: 90%;
 }
 .lock-container h2 { margin-bottom: 20px; color: #0369a1; }
+#time { font-size:2.5rem; font-weight:bold; color:#0369a1; margin-bottom:5px; }
+#date { font-size:1rem; color:#0369a1; margin-bottom:15px; }
+#heart { font-size:80px; color:#f43f5e; margin-bottom:15px; }
 .lock-container input {
-  width: 100%; padding: 10px; margin-bottom: 15px;
+  width: 80%; padding: 10px; margin-bottom: 15px;
   border: 2px solid #38bdf8; border-radius: 12px;
   font-size: 1rem; outline: none;
 }
 .lock-container button {
-  padding: 10px 20px; border: none; border-radius: 12px;
-  background: #0ea5e9; color: white; cursor: pointer; font-size: 1rem;
+  width:84%;
+  padding: 10px;
+  border:none;
+  border-radius:12px;
+  background:#0ea5e9;
+  color:white;
+  font-size:1rem;
+  cursor:pointer;
 }
 .lock-container button:hover { background: #0284c7; }
 #errorMsg { margin-top: 10px; color: red; font-size: 0.9rem; }
@@ -203,6 +215,9 @@ canvas { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:
 <!-- LOCK SCREEN -->
 <div id="lockScreen">
   <div class="lock-container">
+    <div id="time">--:--</div>
+    <div id="date">--</div>
+    <div id="heart">💙</div>
     <h2>🔒 Nhập mật khẩu để mở khóa</h2>
     <input type="password" id="passwordInput" placeholder="Nhập mật khẩu...">
     <button id="unlockBtn">Mở khóa</button>
@@ -261,6 +276,23 @@ Anh đợi em!
 </div>
 
 <script>
+/* ===== REAL TIME CLOCK ===== */
+function updateClock() {
+  const now = new Date();
+  const hours = String(now.getHours()).padStart(2,'0');
+  const minutes = String(now.getMinutes()).padStart(2,'0');
+  document.getElementById('time').textContent = `${hours}:${minutes}`;
+
+  const weekdays = ["Chủ Nhật","Thứ Hai","Thứ Ba","Thứ Tư","Thứ Năm","Thứ Sáu","Thứ Bảy"];
+  const day = weekdays[now.getDay()];
+  const date = now.getDate();
+  const month = now.getMonth()+1;
+  const year = now.getFullYear();
+  document.getElementById('date').textContent = `${day}, ${date} tháng ${month}, ${year}`;
+}
+setInterval(updateClock, 1000);
+updateClock();
+
 /* ===== LOCK SCREEN JS ===== */
 const lockScreen = document.getElementById("lockScreen");
 const unlockBtn = document.getElementById("unlockBtn");
@@ -269,7 +301,7 @@ const errorMsg = document.getElementById("errorMsg");
 const mainContent = document.getElementById("mainContent");
 const correctPassword = "16092004";
 
-unlockBtn.addEventListener("click", ()=>{
+unlockBtn.addEventListener("click", ()=> {
   if(passwordInput.value === correctPassword){
     lockScreen.style.display = "none";
     mainContent.style.display = "block";
@@ -277,7 +309,6 @@ unlockBtn.addEventListener("click", ()=>{
     errorMsg.textContent = "❌ Sai mật khẩu rồi, thử lại nha!";
   }
 });
-
 /* ===== JS GỐC CỦA BẠN ===== */
 const messageText = `Gửi em, hôm nay là ngày của em, Kim Ngọc, vào ngày sinh nhật tuổi mới
 Không biết em có còn nhớ hay còn muốn mở bức thư này ra đọc hay không. Nhưng nếu em đang đọc đến đây, thì anh cảm ơn em - cảm ơn em vì đã cho anh được hiện diện trong ngày đặc biệt nhất của em dù bằng cách này hay cách khác
