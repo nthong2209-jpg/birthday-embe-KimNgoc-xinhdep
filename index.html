@@ -212,6 +212,15 @@ canvas { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:
 
 #slideshow { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); justify-content:center; align-items:center; z-index:9; flex-direction: column; }
 #slideshow img { max-width:80%; max-height:70%; border-radius:20px; box-shadow:0 0 20px rgba(255,255,255,0.6); }
+#slideText {
+  margin-top: 14px;
+  color: white;
+  font-size: 1.2rem;
+  max-width: 80%;
+  text-align: center;
+  line-height: 1.6;
+  text-shadow: 1px 1px 6px rgba(0,0,0,0.7);
+}
 #closeSlideshow { margin-top: 20px; padding: 10px 20px; background: #f43f5e; border: none; border-radius: 12px; color: white; cursor: pointer; font-size: 1rem; }
 #closeSlideshow:hover { background: #be123c; }
 
@@ -284,8 +293,10 @@ text-shadow: 0 0 8px rgba(56,189,248,0.6);
 <div id="giftBox"></div>
 <div id="dogMessage"></div>
 
+<!-- SLIDESHOW -->
 <div id="slideshow">
   <img id="slideImg" src="" alt="Slideshow">
+  <div id="slideText"></div> <!-- thêm text hiển thị -->
   <button id="closeSlideshow">❌ Đóng</button>
 </div>
 
@@ -336,6 +347,7 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock();
 
+
 /* ===== LOCK SCREEN JS ===== */
 const lockScreen = document.getElementById("lockScreen");
 const unlockBtn = document.getElementById("unlockBtn");
@@ -352,8 +364,11 @@ unlockBtn.addEventListener("click", ()=> {
     errorMsg.textContent = "❌ Sai mật khẩu rồi, thử lại nha!";
   }
 });
+
 /* ===== JS GỐC CỦA BẠN ===== */
 const messageText = `Gửi em, ngày 16 - tháng 09, ngày mà thế giới có thêm một người con gái đặc biệt, còn anh may mắn có thêm một người để thương, hôm nay là ngày của em, Kim Ngọc.
+Anh chúc em có một tuổi 21 thật là rực rỡ, hạnh phúc, vui tươi và anh yên mãi mãi nhéeee 💙
+
 Không biết em có còn nhớ hay còn muốn mở bức thư này ra đọc hay không. Nhưng nếu em đang đọc đến đây, thì anh cảm ơn em - cảm ơn em vì đã cho anh được hiện diện trong ngày đặc biệt nhất của em dù bằng cách này hay cách khác
 
 Anh chúc em sinh nhật vui vẻ. Chúc em tuổi mới thật bình an, xinh đẹp và luôn luôn giỏi giang tốt bụng. Anh chúc em đủ mạnh mẽ để giữ lấy những điều xứng đáng, đủ tinh tường để nhận ra những điều không tốt đang đến với mình và đủ dịu dàng để luôn yêu thương chính em.🎀💙
@@ -380,6 +395,15 @@ const slideshowImages = [
   "https://raw.githubusercontent.com/nthong2209-jpg/birthday-embe-KimNgoc-xinhdep/main/anh_kiniem/anni_2thang.jpg",
   "https://raw.githubusercontent.com/nthong2209-jpg/birthday-embe-KimNgoc-xinhdep/main/anh_kiniem/ki_niem_100ngay.jpg",
   "https://raw.githubusercontent.com/nthong2209-jpg/birthday-embe-KimNgoc-xinhdep/main/anh_kiniem/anni_nuanam.jpg",
+];
+
+const slideshowTexts = [
+  "📸 Khoảnh khắc đầu tiên mà mình gặp nhau, anh nhớ, lần đầu em cho phép anh ôm em, cái ôm nhỏ bé thôi nhưng khiến cả thế giới của anh dịu lại. Nó dễ chịu, ấm áp, vừa đủ làm tim anh rung lên, và tư giây phút đó, anh chỉ mong được giữ hơi ấm ấy bên mình thật lâu 💙",
+  "🤗 Đây là lần đầu tiên mà anh dắt em ra mắt bạn bè anh, và em thật sự toả sáng và lấp lánh, em làm anh thật sự tự hào về em",
+  "🌸 Kỉ niệm tròn 1 tháng ngày chúng ta bên nhau, tuy là tháng đầu tiên có hơi vất vả nhưng sau cùng, chúng ta thật hạnh phúc với những ngượng ngùng của tình yêu chớm nở",
+  "🎀 Tháng thứ 2 sau đó, chúng ta đã có biết bao nhiêu là kỉ niệm ấm áp và thật sự hạnh phúc cùng với nhau",
+  "💫 Và rồi, 100 ngày đầu tiên trôi qua, một hành trình nhỏ nhưng chứa đầy biết bao nhiêu là kỉ niệm của rất đáng để nhớ 💙",
+  "💙 Và đây, tròn nửa năm ngày chúng ta bên nhau, cảm ơn em vì đã luôn kiên nhẫn, bao dung, cảm ơn em vì đã luôn dịu dàng bước đến và ở lại bên anh, anh thương em 💙"
 ];
 let slideIndex = 0;
 let slideInterval;
@@ -510,14 +534,14 @@ function spawnConfetti(){
 }
 
 /* ===== SLIDESHOW & FINAL OVERLAY ===== */
-const slideshow=document.getElementById("slideshow");
-const slideImg=document.getElementById("slideImg");
-const closeBtn=document.getElementById("closeSlideshow");
+const slideText = document.getElementById("slideText");
 
 function startSlideshow(){
   slideIndex=0;
   slideshow.style.display="flex";
   slideImg.src=slideshowImages[slideIndex];
+  slideText.textContent=slideshowTexts[slideIndex]; // hiển thị text đầu tiên
+
   slideInterval=setInterval(()=>{
     slideIndex++;
     if(slideIndex>=slideshowImages.length){
@@ -525,6 +549,7 @@ function startSlideshow(){
       return;
     }
     slideImg.src=slideshowImages[slideIndex];
+    slideText.textContent=slideshowTexts[slideIndex]; // update text
   },4000);
 }
 
