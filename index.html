@@ -143,20 +143,41 @@ h1 .birthday-date {
 }
 .surprise.show { opacity:1; transform:translateY(0) scale(1);}
 
-#surpriseBox p, #surpriseBox img {
-  padding: 15px 20px;
-  font-size: 1.1rem;
-  line-height: 1.6;
+#surpriseBox p {
+  padding: 10px 14px;       /* giảm khoảng cách trong */
+  font-size: 1rem;          /* chữ gọn hơn chút */
+  line-height: 1.5;
   background: rgba(186,230,253,0.1);
-  border: 2px solid #38bdf8;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(56,189,248,0.3);
-  max-width: 650px;
-  margin: 15px auto;
+  border: 2.5px solid #38bdf8; /* viền mảnh hơn */
+  border-radius: 15px;      /* bo góc nhỏ hơn */
+  box-shadow: 0 2px 8px rgba(56,189,248,0.25); /* bóng nhẹ hơn */
+  max-width: 600px;         /* khung hẹp lại chút */
+  margin: 12px auto;
   white-space: pre-wrap;
   overflow-wrap: break-word;
   opacity: 0;
   transition: opacity 1s ease, transform 1s ease;
+}
+/* Cho hình ảnh */
+#surpriseBox img {
+  display: block;
+  max-width: 60%;   
+  max-height: 550px;
+  height: auto;
+  margin: 15px auto;
+  border: 5px solid #38bdf8; /* thêm viền */
+  border-radius: 30px;         /* bo góc giống text */
+  object-fit: cover;
+  box-shadow: 0 3px 10px rgba(56,189,248,0.25);
+  opacity: 0;
+  transition: opacity 1s ease, transform 1s ease;
+}
+/* Khi hiện ra */
+#surpriseBox.show p, 
+#surpriseBox.show img {
+  opacity: 1;
+  animation: none;
+  transform: none;
 }
 #surpriseBox.show p, #surpriseBox.show img {
   opacity: 1;
