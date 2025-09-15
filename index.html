@@ -20,6 +20,28 @@ body {
   align-items:center;
 }
 
+/* ===== TITLE ===== */
+h1 {
+  text-align: center;
+  font-family: "Fredoka One", cursive;
+  font-size: 3rem;
+  color: #0369a1;
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+  margin-top: 40px;
+  animation: bounce 1.5s infinite;
+  line-height: 1.5;
+}
+h1 .birthday-date {
+  text-align: center;
+  font-size: inherit; /* giữ cùng size với dòng trên */
+  margin-top: 5px;
+}
+
+@keyframes bounce { 
+  0%,100% { transform:translateY(0); } 
+  50% { transform:translateY(-10px); } 
+}
+
 /* ===== LOCK SCREEN ===== */
 #lockScreen {
   position: fixed;
@@ -65,17 +87,7 @@ body {
 /* ===== ẨN NỘI DUNG CHÍNH BAN ĐẦU ===== */
 #mainContent { display: none; }
 
-/* ===== CSS GỐC CỦA BẠN ===== */
-h1 {
-  font-family: "Fredoka One", cursive;
-  font-size: 3rem;
-  color: #0369a1;
-  text-shadow: 2px 2px 6px rgba(0,0,0,0.2);
-  margin-top: 40px;
-  animation: bounce 1.5s infinite;
-}
-@keyframes bounce { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-10px); } }
-
+/* ===== MESSAGE BOX ===== */
 .message, #dogMessage {
   max-width: 650px;
   margin: 20px auto;
@@ -98,6 +110,7 @@ h1 {
 }
 @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
 
+/* ===== SURPRISE ===== */
 .surprise {
   display:flex;
   flex-direction:column;
@@ -208,6 +221,28 @@ canvas { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:
 @keyframes pulse { 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.3); } }
 
 .confetti{border-radius:50%; pointer-events:none;}
+
+/* ===== FINAL OVERLAY TÙY CHỈNH ===== */
+#finalOverlay .overlay-box {
+  border: 2px solid #38bdf8;
+  padding: 20px;
+  border-radius: 16px;
+  max-width: 700px;
+  background: rgba(255,255,255,0.05);
+  box-shadow: 0 0 12px rgba(56,189,248,0.5);
+}
+
+#finalOverlay .overlay-text {
+  font-family: "Times New Roman", "Georgia", serif; /* font vintage */
+  font-size: 16px;
+  line-height: 1.6;
+  color: black;
+  text-align: left;
+  background: linear-gradient(90deg, #ffffff, #dbeafe, #ffffff);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+text-shadow: 0 0 8px rgba(56,189,248,0.6);
+}
 </style>
 </head>
 <body>
@@ -228,7 +263,10 @@ canvas { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:
 <!-- MAIN CONTENT -->
 <div id="mainContent">
 
-<h1>☁️ Happy Birthday to em bé Kim Ngọc 💙</h1>
+<h1>
+  <div>☁️ Happy Birthday to em bé Kim Ngọc 💙</div>
+  <div class="birthday-date">➰ 16/09/2004 - 16/09/2025 ➰</div>
+</h1>
 
 <div class="controls">
   <button id="showMessageBtn">Bấm vô em nèee chị Ngọc uii 🐕</button>
@@ -251,8 +289,11 @@ canvas { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:
   <button id="closeSlideshow">❌ Đóng</button>
 </div>
 
+<!-- FINAL OVERLAY -->
 <div id="finalOverlay">
- Gửi em, 
+  <div class="overlay-box">
+    <div class="overlay-text">
+Gửi em, 
 
 Chúng ta đến với nhau như một cơn mưa rào giữa mùa hanh nóng, bất chợt, không hề báo trước. Anh không tin vào định mệnh, nhưng nếu có điều gì đó gọi là "duyên" thì chắc chắn đó chính là em, người con gái đã bước vào cuộc đời anh lặng lẽ mà khiến nó gợn sóng đến không ngờ
 
@@ -260,9 +301,11 @@ Em mạnh mẽ, anh biết. Nhưng mạnh mẽ không có nghĩa là không bi�
 
 Khoảng cách giữa hai ta, thật ra không nằm ở khoảng cách địa lý. Nó nằm ở những khoảng lặng mà anh bỏ quên trong tâm hồn em. Anh không muốn dùng lời xin lỗi như chiếc ô che đi lỗi lầm của mình, cũng không muốn lấy tình yêu ra để biện minh cho sự vô tâm của anh. Anh chỉ mong em hiểu rằng, giữa thế giới rộng lớn này, em là điều mà anh thật sự rất trân trọng nhất từ trước tới giờ. 
 
-Và nếu có thể, anh ước mình dược bắt đầu lại, không phải là để xoá đi quá khứ, mà để yêu em một cách tử tế hơn. Anh gửi em bức thư này, website chúc mừng sinh nhật này, và boá hoa cẩm tú cầu này- tượng trưng cho lời xin lỗi, cho lời yêu không nói thành lời của anh. Nếu trong lòng em còn chút gì đó dành cho anh, thì xin em hãy nhận đoá hoa này. Nếu con đường ấy vẫn dành cho anh, thì anh hứa sẽ không để lạc mất em thêm bất kì lần nào nữa. 
+Và nếu có thể, anh ước mình được bắt đầu lại, không phải là để xoá đi quá khứ, mà để yêu em một cách tử tế hơn. Anh gửi em bức thư này, website chúc mừng sinh nhật này, và đoá hoa cẩm tú cầu này - tượng trưng cho lời xin lỗi, cho lời yêu không nói thành lời của anh. Nếu trong lòng em còn chút gì đó dành cho anh, thì xin em hãy nhận đoá hoa này. Nếu con đường ấy vẫn dành cho anh, thì anh hứa sẽ không để lạc mất em thêm bất kì lần nào nữa. 
 
 Anh đợi em!
+    </div>
+  </div>
 </div>
 
 <audio id="bgMusic" loop>
@@ -322,11 +365,11 @@ Cảm ơn em, vì đã từng là nhà, vì đã từng là nơi để anh về 
 `;
 
 const surprises = [
-  { text: "Ngày nì là ngày có một cô công chúa cực kì giỏi giang và xinh đẹp được chào đời trong vòng tay ấm áp của ba mẹ và mọi người thương yêu 🎁💙", img: "https://raw.githubusercontent.com/nthong2209-jpg/birthday-web-Kngoc/main/anh_hoi_nho_cua_Kngoc.jpg" },
-  { text: "Và rồi, cô gái ấy cũng lớn lên và ăn học thành tài, trở thành một người tốt bụng và giỏi giang luôn giúp đỡ mọi người. Cô gái ấy nhiều năm liền đạt được HSG trong trường và đặc biệt còn đạt được giải HSG môn Sử cấp thành phố nữa 🌸", img: "https://raw.githubusercontent.com/nthong2209-jpg/birthday-embe-KimNgoc-xinhdep/main/anh_Kngoc_hoidihoc.jpg" },
-  { text: "Cô gái ấy không những là một người xinh đẹp, giỏi giang, mà còn là một người con gái vô cùng dễ thương và hiền dịu, cô ấy là một cô gái có tính cách dễ thương và rất biết cách làm nũng trước mặt mọi người, thật sự ai nhìn thấy đều không thể rời mắt được 💕", img: "https://raw.githubusercontent.com/nthong2209-jpg/birthday-embe-KimNgoc-xinhdep/main/anh_dthh_cua_Kngoc.png" },
-  { text: "Cô ấy là người con gái đầy năng lượng tích cực, luôn tỏa sáng và truyền cảm hứng cho mọi người xung quanh. Dịu dàng và tử tế trong từng hành động, và tinh tế đến từng chi tiết nhỏ, khiến ai tiếp xúc cũng cảm thấy ấm áp và an yên. Mỗi nụ cười của cô ấy đều mang lại niềm vui và sự tươi mới, một sự kết hợp hoàn hảo giữa lòng tốt, sự nhạy bén và vẻ đẹp tự nhiên 🎀💙 ", img: "https://raw.githubusercontent.com/nthong2209-jpg/birthday-embe-KimNgoc-xinhdep/main/anh_Kngoc_xinhdep.jpg"},
-  { text: "Và mình cũng chúc cô gái này có mãi nụ cười trên môi, mãi mãi giữ năng lượng tích cực này và mãi mãi có một cuộc sống an yên và hạnh phúc, Kim Ngọc, em thật sự là một cô gái mà mọi người hằng mong ước, mãi mãi giữ nụ cười này nhé, mãi mãi giữ sự an yên và hạnh phúc của chính em nhé. Thương em 💙", img: "https://raw.githubusercontent.com/nthong2209-jpg/birthday-embe-KimNgoc-xinhdep/main/anh_birthday_2.jpg"},
+  { text: "Ngày nì là ngày có một cô công chúa cực kì giỏi giang và xinh đẹp được chào đời trong vòng tay ấm áp của ba mẹ và mọi người thương yêu 🎁💙", img: "https://raw.githubusercontent.com/nthong2209-jpg/birthday-web-Kngoc/main/tatca_su_xinhdep_cua_Kngoccc/anh_hoi_nho_cua_Kngoc.jpg" },
+  { text: "Và rồi, cô gái ấy cũng lớn lên và ăn học thành tài, trở thành một người tốt bụng và giỏi giang luôn giúp đỡ mọi người. Cô gái ấy nhiều năm liền đạt được HSG trong trường và đặc biệt còn đạt được giải HSG môn Sử cấp thành phố nữa 🌸", img: "https://raw.githubusercontent.com/nthong2209-jpg/birthday-web-Kngoc/main/tatca_su_xinhdep_cua_Kngoccc/anh_Kngoc_hoidihoc.jpg" },
+  { text: "Cô gái ấy không những là một người xinh đẹp, giỏi giang, mà còn là một người con gái vô cùng dễ thương và hiền dịu, cô ấy là một cô gái có tính cách dễ thương và rất biết cách làm nũng trước mặt mọi người, thật sự ai nhìn thấy đều không thể rời mắt được 💕", img: "https://raw.githubusercontent.com/nthong2209-jpg/birthday-web-Kngoc/main/tatca_su_xinhdep_cua_Kngoccc/anh_dthh_cua_Kngoc.JPG" },
+  { text: "Cô ấy là người con gái đầy năng lượng tích cực, luôn tỏa sáng và truyền cảm hứng cho mọi người xung quanh. Dịu dàng và tử tế trong từng hành động, và tinh tế đến từng chi tiết nhỏ, khiến ai tiếp xúc cũng cảm thấy ấm áp và an yên. Mỗi nụ cười của cô ấy đều mang lại niềm vui và sự tươi mới, một sự kết hợp hoàn hảo giữa lòng tốt, sự nhạy bén và vẻ đẹp tự nhiên 🎀💙 ", img: "https://raw.githubusercontent.com/nthong2209-jpg/birthday-web-Kngoc/main/tatca_su_xinhdep_cua_Kngoccc/anh_Kngoc_xinhdep.jpg"},
+  { text: "Và mình cũng chúc cô gái này có mãi nụ cười trên môi, mãi mãi giữ năng lượng tích cực này và mãi mãi có một cuộc sống an yên và hạnh phúc, Kim Ngọc, em thật sự là một cô gái mà mọi người hằng mong ước, mãi mãi giữ nụ cười này nhé, mãi mãi giữ sự an yên và hạnh phúc của chính em nhé. Thương em 💙", img: "https://raw.githubusercontent.com/nthong2209-jpg/birthday-web-Kngoc/main/tatca_su_xinhdep_cua_Kngoccc/anh_Kngoc_cuoi_rattxinhh.jpg"},
 ];
 let currentIndex = 0;
 
