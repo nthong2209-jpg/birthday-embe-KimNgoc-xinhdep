@@ -334,6 +334,14 @@ text-shadow: 0 0 8px rgba(56,189,248,0.6);
   object-fit: cover;
   box-shadow: 0 3px 10px rgba(56,189,248,0.25);
 }
+/* Fade in - fade out cho slideshow */
+.fade {
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+.fade.show {
+  opacity: 1;
+}
 </style>
 </head>
 <body>
@@ -377,8 +385,8 @@ text-shadow: 0 0 8px rgba(56,189,248,0.6);
 
 <!-- SLIDESHOW -->
 <div id="slideshow">
-  <img id="slideImg" src="" alt="Slideshow">
-  <div id="slideText"></div> <!-- thêm text hiển thị -->
+  <img id="slideImg" src="" alt="Slideshow" class="fade">
+  <div id="slideText" class="fade"></div>
   <button id="closeSlideshow">❌ Đóng</button>
 </div>
 
@@ -660,30 +668,49 @@ function spawnConfetti(){
   }
 }
 
+
 /* ===== SLIDESHOW & FINAL OVERLAY ===== */
 const slideText = document.getElementById("slideText");
+const slideImg = document.getElementById("slideImg");
+const slideshow = document.getElementById("slideshow");
+const closeBtn = document.getElementById("closeSlideshow");
 
 function startSlideshow(){
-  slideIndex=0;
-  slideshow.style.display="flex";
-  slideImg.src=slideshowImages[slideIndex];
-  slideText.textContent=slideshowTexts[slideIndex]; // hiển thị text đầu tiên
+  slideIndex = 0;
+  slideshow.style.display = "flex";
 
-  slideInterval=setInterval(()=>{
+  // hiển thị ảnh và text đầu tiên
+  updateSlide();
+
+  slideInterval = setInterval(()=>{
     slideIndex++;
-    if(slideIndex>=slideshowImages.length){
+    if(slideIndex >= slideshowImages.length){
       endSlideshow();
       return;
     }
-    slideImg.src=slideshowImages[slideIndex];
-    slideText.textContent=slideshowTexts[slideIndex]; // update text
-  },4000);
+    updateSlide();
+  }, 4000);
+}
+
+function updateSlide(){
+  // fade out trước
+  slideImg.classList.remove("show");
+  slideText.classList.remove("show");
+
+  setTimeout(()=>{
+    slideImg.src = slideshowImages[slideIndex];
+    slideText.textContent = slideshowTexts[slideIndex];
+
+    // fade in lại
+    slideImg.classList.add("show");
+    slideText.classList.add("show");
+  }, 500); // thời gian chờ cho fade out
 }
 
 function endSlideshow(){
   clearInterval(slideInterval);
-  slideshow.style.display="none";
-  document.getElementById("finalOverlay").style.display="flex";
+  slideshow.style.display = "none";
+  document.getElementById("finalOverlay").style.display = "flex";
   spawnConfetti();
 }
 
