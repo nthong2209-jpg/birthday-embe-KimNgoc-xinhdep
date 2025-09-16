@@ -25,6 +25,7 @@
   <!-- End Google Analytics -->
 <meta charset="UTF-8">
 <title>Happy Birthday Kim Ngọc 💙</title>
+
 <style>
 /* ===== BODY ===== */
 body {
@@ -159,19 +160,28 @@ h1 .birthday-date {
   transition: opacity 1s ease, transform 1s ease;
 }
 /* Cho hình ảnh */
+/* Ảnh mặc định (1 ảnh duy nhất) */
 #surpriseBox img {
   display: block;
-  max-width: 60%;   
+  max-width: 80%;
   max-height: 550px;
   height: auto;
   margin: 15px auto;
-  border: 5px solid #38bdf8; /* thêm viền */
-  border-radius: 30px;         /* bo góc giống text */
+  border: 5px solid #38bdf8;
+  border-radius: 30px;
   object-fit: cover;
   box-shadow: 0 3px 10px rgba(56,189,248,0.25);
   opacity: 0;
   transition: opacity 1s ease, transform 1s ease;
 }
+
+/* Khi có 2 ảnh trong 1 hàng */
+.img-row img {
+  max-width: 45%;
+  margin: 15px 0;  /* bỏ auto để dễ căn ngang */
+}
+
+
 /* Khi hiện ra */
 #surpriseBox.show p, 
 #surpriseBox.show img {
@@ -179,11 +189,27 @@ h1 .birthday-date {
   animation: none;
   transform: none;
 }
-#surpriseBox.show p, #surpriseBox.show img {
-  opacity: 1;
-  animation: none;
-  transform: none;
+
+/* Container cho nhiều ảnh */
+.img-row {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }
+
+.img-row img {
+  max-width: 45%;
+  margin: 0; /* bỏ margin auto để không bị lệch */
+}
+
+/* Responsive trên màn nhỏ */
+@media (max-width: 768px) {
+  .img-row img {
+    max-width: 90%;
+  }
+}
+
 
 #countdownBar {
   position:absolute;
@@ -294,6 +320,19 @@ canvas { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:
 -webkit-background-clip: text;
 -webkit-text-fill-color: transparent;
 text-shadow: 0 0 8px rgba(56,189,248,0.6);
+}
+.img-row {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.img-row img {
+  max-width: 45%;
+  border: 5px solid #38bdf8;
+  border-radius: 30px;
+  object-fit: cover;
+  box-shadow: 0 3px 10px rgba(56,189,248,0.25);
 }
 </style>
 </head>
@@ -423,11 +462,34 @@ Cảm ơn em, vì đã từng là nhà, vì đã từng là nơi để anh về 
 `;
 
 const surprises = [
-  { text: "Ngày nì là ngày có một cô công chúa cực kì giỏi giang và xinh đẹp được chào đời trong vòng tay ấm áp của ba mẹ và mọi người thương yêu 🎁💙", img: "https://raw.githubusercontent.com/nthong2209-jpg/birthday-web-Kngoc/main/tatca_su_xinhdep_cua_Kngoccc/anh_hoi_nho_cua_Kngoc.jpg" },
-  { text: "Và rồi, cô gái ấy cũng lớn lên và ăn học thành tài, trở thành một người con gái giỏi giang và tốt bụng luôn giúp đỡ mọi người. Cô gái ấy nhiều năm liền đạt được HSG trong trường và đặc biệt còn đạt được giải HSG môn Sử cấp thành phố nữa 🌸", img: "https://raw.githubusercontent.com/nthong2209-jpg/birthday-web-Kngoc/main/tatca_su_xinhdep_cua_Kngoccc/anh_Kngoc_hoidihoc.jpg" },
-  { text: "Cô gái ấy không những là một người xinh đẹp, giỏi giang, mà còn là một người con gái vô cùng dễ thương và hiền dịu, cô ấy là một cô gái có tính cách dễ thương và rất biết cách làm nũng trước mặt mọi người, thật sự ai nhìn thấy đều không thể rời mắt được 💕", img: "https://raw.githubusercontent.com/nthong2209-jpg/birthday-web-Kngoc/main/tatca_su_xinhdep_cua_Kngoccc/anh_dthh_cua_Kngoc.JPG" },
-  { text: "Cô ấy là người con gái đầy năng lượng tích cực, luôn tỏa sáng và truyền cảm hứng cho mọi người xung quanh. Dịu dàng và tử tế trong từng hành động, và tinh tế đến từng chi tiết nhỏ, khiến ai tiếp xúc cũng cảm thấy ấm áp và an yên. Mỗi nụ cười của cô ấy đều mang lại niềm vui và sự tươi mới, một sự kết hợp hoàn hảo giữa lòng tốt, sự nhạy bén và vẻ đẹp tự nhiên 🎀💙 ", img: "https://raw.githubusercontent.com/nthong2209-jpg/birthday-web-Kngoc/main/tatca_su_xinhdep_cua_Kngoccc/anh_Kngoc_xinhdep.jpg"},
-  { text: "Và mình cũng chúc cô gái này có mãi nụ cười trên môi, mãi mãi giữ năng lượng tích cực này và mãi mãi có một cuộc sống an yên và hạnh phúc, Kim Ngọc, em thật sự là một cô gái mà mọi người hằng mong ước, mãi mãi giữ nụ cười này nhé, mãi mãi giữ sự an yên và hạnh phúc của chính em nhé. Thương em 💙", img: "https://raw.githubusercontent.com/nthong2209-jpg/birthday-web-Kngoc/main/tatca_su_xinhdep_cua_Kngoccc/anh_Kngoc_cuoi_rattxinhh.jpg"},
+  { 
+    text: "Ngày nì là ngày có một cô công chúa cực kì giỏi giang và xinh đẹp được chào đời trong vòng tay ấm áp của ba mẹ và mọi người thương yêu 🎁💙", 
+    img: ["https://raw.githubusercontent.com/nthong2209-jpg/birthday-web-Kngoc/main/tatca_su_xinhdep_cua_Kngoccc/anh_hoi_nho_cua_Kngoc.jpg"] 
+  },
+  { 
+    text: "Thời gian trôi, em ấy trưởng thành, vừa giỏi giang vừa nhân hậu, luôn mang tấm lòng giúp đỡ mọi người. Suốt nhiều năm liền em ấy đạt danh hiệu học sinh giỏi, và đặc biệt còn để lại dấu ấn với giải HSG môn Lịch sử cấp thành phố nữa 🌸", 
+    img: [
+      "https://raw.githubusercontent.com/nthong2209-jpg/birthday-web-Kngoc/main/tatca_su_xinhdep_cua_Kngoccc/anh_Kngoc_hoidihoc.jpg", 
+      "https://raw.githubusercontent.com/nthong2209-jpg/birthday-embe-KimNgoc-xinhdep/main/tatca_su_xinhdep_cua_Kngoccc/anh_doat_giai_monSu.jpg"   // 👈 ảnh phụ thêm ở surprise 2
+    ] 
+  },
+  { 
+    text: "Không chỉ xinh đẹp và giỏi giang, em còn mang trong mình sự dịu dàng và nét đáng yêu khó lẫn. Cái cách em  khẽ làm nũng khiến ai bên cạnh cũng phải mỉm cười, và rồi chẳng ai có thể rời mắt khỏi em được 💕", 
+    img: ["https://raw.githubusercontent.com/nthong2209-jpg/birthday-web-Kngoc/main/tatca_su_xinhdep_cua_Kngoccc/anh_dthh_cua_Kngoc.JPG"] 
+  },
+  {
+    text: "Giữa muôn vàn ánh đèn nơi thành phố, em là nét dịu dàng hiếm có, lấy sự trưởng thành và bao dung để ôm ấp, chở che cho những người mình thương🌸. ",
+    img: ["https://raw.githubusercontent.com/nthong2209-jpg/birthday-web-Kngoc/main/tatca_su_xinhdep_cua_Kngoccc/anh_Kngoc_xinhdep.jpg"]
+  },
+  {
+    text: "Em là người con gái đầy năng lượng tích cực, luôn tỏa sáng và truyền cảm hứng cho mọi người xung quanh. Dịu dàng và tử tế trong từng hành động, và tinh tế đến từng chi tiết nhỏ, khiến ai tiếp xúc cũng cảm thấy ấm áp và an yên. Mỗi nụ cười của em đều mang lại niềm vui và sự tươi mới, một sự kết hợp hoàn hảo giữa lòng tốt, sự nhạy bén và vẻ đẹp tự nhiên 🎀💙",
+    img: [" https://raw.githubusercontent.com/nthong2209-jpg/birthday-embe-KimNgoc-xinhdep/main/tatca_su_xinhdep_cua_Kngoccc/anh_Kngoc_cucki_dethuong.jpg"]
+  },
+  {
+    text: "Mong rằng nụ cười ấy sẽ mãi nở trên môi em, để an yên và hạnh phúc luôn đồng hành cùng em suốt chặng đường. Kim Ngọc, em là cô gái mà bất kỳ ai cũng mong ước có trong đời. Giữ lấy niềm vui, giữ lấy sự dịu dàng ấy nhé. Thương em thật nhiều 💙",
+    img: ["https://raw.githubusercontent.com/nthong2209-jpg/birthday-web-Kngoc/main/tatca_su_xinhdep_cua_Kngoccc/anh_Kngoc_cuoi_rattxinhh.jpg"]
+  },
+
 ];
 let currentIndex = 0;
 
@@ -484,19 +546,39 @@ function nextSurprise(){
     return;
   }
 
+  // reset box trước khi hiện surprise mới
   box.classList.remove("show");
   box.innerHTML = '<div id="countdownBar"></div>';
   const barNew = document.getElementById("countdownBar");
   barNew.style.width="100%";
 
   const s = surprises[currentIndex];
-  const p = document.createElement("p"); p.textContent = s.text;
-  const img = document.createElement("img"); img.src = s.img; img.alt="Surprise";
-  box.appendChild(p); box.appendChild(img);
+  const p = document.createElement("p"); 
+  p.textContent = s.text;
+  box.appendChild(p);
 
+  // 👉 Check nếu img là mảng thì hiển thị nhiều ảnh ngang hàng
+  if (Array.isArray(s.img)) {
+  const row = document.createElement("div");
+  row.className = "img-row";
+  s.img.forEach(src => {
+    const img = document.createElement("img");
+    img.src = src;
+    row.appendChild(img);
+  });
+  box.appendChild(row);
+} else {
+  const img = document.createElement("img");
+  img.src = s.img;
+  box.appendChild(img);
+}
+
+
+  // animation show
   void box.offsetWidth;
   setTimeout(()=>{ box.classList.add("show"); }, 500);
 
+  // countdown
   let countdown = 30;
   countdownSpan.textContent = countdown+"s";
   const interval = setInterval(()=>{
@@ -511,6 +593,8 @@ function nextSurprise(){
     }
   },1000);
 }
+
+
 
 const music = document.getElementById("bgMusic");
 const musicBtn = document.createElement("button");
